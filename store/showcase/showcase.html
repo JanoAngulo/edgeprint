@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edgeprint Showcase</title>
+<style>
+  @font-face {
+    font-family: "Inter";
+    src: url("fonts/inter.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  @page { size: 1280px 720px; margin: 0; }
+  :root {
+    --bg: #000;
+    --surface: #141414;
+    --line: #2e2e2e;
+    --text: #f2f2f0;
+    --text-2: #9a9aa0;
+    --accent: #f0a040;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    color: var(--text);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    padding: 64px 72px 88px;
+    overflow: hidden;
+    break-after: page;
+    display: grid;
+  }
+  .page:last-child { break-after: auto; }
+
+  h1 { font-size: 76px; line-height: 1; letter-spacing: -0.035em; font-weight: 650; margin: 0 0 28px; }
+  h2 { font-size: 44px; line-height: 1.08; letter-spacing: -0.025em; font-weight: 620; margin: 0 0 20px; }
+  h3 { font-size: 18px; font-weight: 620; margin: 0 0 6px; letter-spacing: -0.01em; }
+  p { margin: 0; }
+  .lead { font-size: 28px; line-height: 1.2; letter-spacing: -0.015em; font-weight: 560; margin-bottom: 20px; }
+  .body { font-size: 17px; line-height: 1.55; color: var(--text-2); }
+  .small { font-size: 14px; line-height: 1.5; color: var(--text-2); }
+  .accent { color: var(--accent); }
+
+  /* Film-edge marker, the same caption the app's home screen uses. */
+  .edge {
+    position: absolute;
+    left: 72px;
+    right: 72px;
+    bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .edge b { color: var(--accent); font-weight: 700; letter-spacing: 0.02em; }
+  .edge .end { margin-left: auto; }
+
+  .phone {
+    border-radius: 26px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #000;
+    flex: none;
+  }
+  .phone img, .shot img { display: block; width: 100%; height: auto; }
+  .shot { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
+
+  /* 1 Cover */
+  .cover { grid-template-columns: 1fr auto; align-items: center; gap: 56px; }
+  .cover .phones { display: flex; gap: 22px; align-items: flex-start; }
+  .cover .phone { width: 248px; }
+  .cover .phone + .phone { margin-top: 56px; }
+  .cover .lead { max-width: 560px; }
+  .cover .body { max-width: 520px; }
+
+  /* 2 Steps */
+  .steps { grid-template-rows: auto 1fr; }
+  .steps .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; align-items: start; }
+  .step { display: grid; grid-template-columns: 214px 1fr; gap: 20px; align-items: start; }
+  .step .phone { width: 214px; }
+  .step .num { font-size: 13px; font-weight: 700; color: var(--accent); margin: 6px 0 10px; letter-spacing: 0.02em; }
+  .head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 48px; margin-bottom: 32px; }
+  .head-row h2 { margin: 0; }
+  .head-row .body { max-width: 430px; }
+
+  /* 3 Styles */
+  .styles { grid-template-columns: 1fr auto; gap: 56px; align-items: center; }
+  .families { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 36px; margin-top: 30px; }
+  .family h3 span { color: var(--text-2); font-weight: 500; margin-left: 6px; }
+  .styles .phones { display: flex; gap: 22px; }
+  .styles .phone { width: 236px; }
+
+  /* 4 Make it yours */
+  .yours { grid-template-columns: auto 1fr; gap: 64px; align-items: center; }
+  .yours .phones { display: flex; gap: 22px; }
+  .yours .phone { width: 236px; }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 36px; margin-top: 30px; }
+  .fact .big { font-size: 40px; font-weight: 650; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+
+  /* 5 Any screen */
+  .screens { grid-template-columns: 1fr 250px; grid-template-rows: auto 1fr; gap: 0 48px; }
+  .screens .intro { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: flex-end; gap: 48px; margin-bottom: 32px; }
+  .screens .intro h2 { margin: 0; }
+  .screens .intro .body { max-width: 470px; }
+  .screens .left { display: grid; gap: 14px; align-content: start; }
+  .screens .tablet { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); align-self: start; }
+  .screens .tablet img { display: block; width: 100%; }
+  .cap { font-size: 13px; color: var(--text-2); margin-top: 8px; }
+
+  /* 6 Privacy */
+  .privacy { grid-template-columns: 470px 1fr; gap: 56px; align-items: center; }
+  .perm { border-top: 1px solid var(--line); padding: 14px 0; display: grid; grid-template-columns: 1fr auto; gap: 4px 24px; }
+  .perm:last-child { border-bottom: 1px solid var(--line); }
+  .perm .tag { font-size: 13px; font-weight: 600; color: var(--text-2); align-self: center; }
+  .perm .tag.no { color: var(--accent); }
+  .perms { margin-top: 26px; }
+
+  /* 7 Specs */
+  .specs { grid-template-columns: 1fr 420px; gap: 72px; align-content: center; }
+  table { border-collapse: collapse; width: 100%; font-size: 16px; }
+  td { padding: 12px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 1px solid var(--line); }
+  td:first-child { color: var(--text-2); width: 190px; }
+  .credit { align-self: center; }
+  .credit .name { font-size: 30px; font-weight: 620; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .credit .links { margin-top: 22px; display: grid; gap: 6px; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<!-- 1 Cover -->
+<section class="page cover">
+  <div>
+    <h1>Edgeprint</h1>
+    <p class="lead">Put your camera settings on your photos.</p>
+    <p class="body">An Android app that frames each photo with the camera, lens and exposure it was shot with, then saves it at full resolution. It works offline, and your originals stay untouched.</p>
+  </div>
+  <div class="phones">
+    <div class="phone"><img src="img/home.jpg" alt="Edgeprint home screen showing a recent save"></div>
+    <div class="phone"><img src="img/classic.jpg" alt="Editor with the Classic style"></div>
+  </div>
+  <div class="edge"><b>▶ 01</b><span>Edgeprint for Android</span><span class="end">John Russel L. Angulo · 2026</span></div>
+</section>
+
+<!-- 2 How it works -->
+<section class="page steps">
+  <div class="head-row">
+    <h2>Three steps, no fiddling.</h2>
+    <p class="body">Edgeprint reads the details already stored in your photo, so most photos are ready the moment they open.</p>
+  </div>
+  <div class="row">
+    <div class="step">
+      <div class="phone"><img src="img/home.jpg" alt="Home screen with the Choose photos button"></div>
+      <div>
+        <p class="num">STEP 1</p>
+        <h3>Pick photos</h3>
+        <p class="small">Choose up to 50 at once, or share them straight from Gallery.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="phone"><img src="img/poster.jpg" alt="Editor showing the Gallery poster style"></div>
+      <div>
+        <p class="num">STEP 2</p>
+        <h3>Choose a style</h3>
+        <p class="small">Every thumbnail is a live preview of your own photo.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="phone"><img src="img/details.jpg" alt="Details tab with camera, focal length, aperture, shutter and ISO fields"></div>
+      <div>
+        <p class="num">STEP 3</p>
+        <h3>Check and save</h3>
+        <p class="small">Edit any value, then save a new full-resolution JPEG.</p>
+      </div>
+    </div>
+  </div>
+  <div class="edge"><b>▶ 02</b><span>How it works</span><span class="end">Edgeprint</span></div>
+</section>
+
+<!-- 3 Styles -->
+<section class="page styles">
+  <div>
+    <h2>25 styles in six families.</h2>
+    <p class="body">From a quiet info bar to a magazine layout, each style is drawn at your photo's full resolution.</p>
+    <div class="families">
+      <div class="family"><h3>Bar <span>4</span></h3><p class="small">Classic, Split, Focal, Logo first</p></div>
+      <div class="family"><h3>Frame <span>5</span></h3><p class="small">Border, Instant, Film 35, Film 120, Mat</p></div>
+      <div class="family"><h3>Poster <span>5</span></h3><p class="small">Gallery, Line, Shadow, Card, Chips</p></div>
+      <div class="family"><h3>Overlay <span>6</span></h3><p class="small">Strip, Caption, Center, Signature, Corners, Inset</p></div>
+      <div class="family"><h3>Editorial <span>2</span></h3><p class="small">Side panel, Magazine</p></div>
+      <div class="family"><h3>Special <span>3</span></h3><p class="small">Dark panel, Blur, Header</p></div>
+    </div>
+  </div>
+  <div class="phones">
+    <div class="phone"><img src="img/poster.jpg" alt="Gallery poster style"></div>
+    <div class="phone"><img src="img/nothing.jpg" alt="Poster style with the Nothing logo"></div>
+  </div>
+  <div class="edge"><b>▶ 03</b><span>Styles</span><span class="end">Edgeprint</span></div>
+</section>
+
+<!-- 4 Make it yours -->
+<section class="page yours">
+  <div class="phones">
+    <div class="phone"><img src="img/look.jpg" alt="Look tab with logo, font and background options"></div>
+    <div class="phone"><img src="img/dark.jpg" alt="Dark panel style with the Nothing logo drawn in white"></div>
+  </div>
+  <div>
+    <h2>Make it yours.</h2>
+    <p class="body">The camera brand's logo is picked from the photo automatically and switches between black and white to suit the background.</p>
+    <div class="facts">
+      <div class="fact"><p class="big">52</p><p class="small">Camera and phone brand logos, from Leica to Nothing, or upload your own.</p></div>
+      <div class="fact"><p class="big">10</p><p class="small">Bundled fonts, including Inter, Space Grotesk and Playfair Display.</p></div>
+      <div class="fact"><p class="big">5</p><p class="small">Aspect ratios: Original, 1:1, 4:5, 9:16 and 16:9.</p></div>
+      <div class="fact"><p class="big">Every</p><p class="small">detail is editable: camera, lens settings, date, place, your name, a title or a quote.</p></div>
+    </div>
+  </div>
+  <div class="edge"><b>▶ 04</b><span>Customisation</span><span class="end">Edgeprint</span></div>
+</section>
+
+<!-- 5 Any screen -->
+<section class="page screens">
+  <div class="intro">
+    <h2>Built for any screen.</h2>
+    <p class="body">In landscape the tools move beside the photo, so the photo keeps the full height. Tablets get a roomier panel, and both layouts keep clear of the camera cutout and stay usable with large text.</p>
+  </div>
+  <div class="left">
+    <div class="shot"><img src="img/land-editor.jpg" alt="Editor in landscape with tools beside the photo"></div>
+    <p class="cap">Phone, landscape: photo on the left, tools on the right.</p>
+  </div>
+  <div>
+    <div class="tablet"><img src="img/tablet-editor.jpg" alt="Editor on a tablet in portrait"></div>
+    <p class="cap">Tablet, portrait.</p>
+  </div>
+  <div class="edge"><b>▶ 05</b><span>Responsive layout</span><span class="end">Edgeprint</span></div>
+</section>
+
+<!-- 6 Privacy -->
+<section class="page privacy">
+  <div>
+    <h2>Private by design.</h2>
+    <p class="body">Edgeprint doesn't request internet access, so it can't upload your photos. There are no accounts, ads or tracking.</p>
+    <div class="perms">
+      <div class="perm"><h3>Photos and media</h3><span class="tag">Optional</span><p class="small">Only to read GPS from the original file. Picking works without it.</p></div>
+      <div class="perm"><h3>Media location</h3><span class="tag">Required by Android</span><p class="small">Lets the app see a photo's GPS so it can show the place.</p></div>
+      <div class="perm"><h3>Internet, camera, contacts</h3><span class="tag no">Not requested</span><p class="small">Nothing leaves your phone through the app.</p></div>
+    </div>
+  </div>
+  <div>
+    <div class="shot"><img src="img/land-settings.jpg" alt="Export settings with the Keep GPS in saved files switch"></div>
+    <p class="cap">Turn off “Keep GPS in saved files” before posting to keep where you were private.</p>
+  </div>
+  <div class="edge"><b>▶ 06</b><span>Privacy</span><span class="end">Edgeprint</span></div>
+</section>
+
+<!-- 7 Specs -->
+<section class="page specs">
+  <div>
+    <h2>Specs.</h2>
+    <table>
+      <tr><td>Platform</td><td>Android 10 and newer, targets Android 16</td></tr>
+      <tr><td>Built with</td><td>Kotlin, Jetpack Compose, Material 3</td></tr>
+      <tr><td>Export</td><td>JPEG at full resolution (up to 50 MP), 4096 px or 2560 px, adjustable quality</td></tr>
+      <tr><td>Metadata</td><td>Camera details copied to the saved file; GPS optional</td></tr>
+      <tr><td>Batch</td><td>Up to 50 photos, saved in one go</td></tr>
+      <tr><td>Size</td><td>About 7 MB, works fully offline</td></tr>
+    </table>
+  </div>
+  <div class="credit">
+    <p class="small">Design and development</p>
+    <p class="name">John Russel L. Angulo</p>
+    <p class="body">Frontend developer and UI/UX designer, Philippines.</p>
+    <div class="links">
+      <span>jrla1219.web.app</span>
+      <span>github.com/JanoAngulo</span>
+    </div>
+  </div>
+  <div class="edge"><b>▶ 07</b><span>Specs</span><span class="end">Edgeprint</span></div>
+</section>
+
+</body>
+</html>

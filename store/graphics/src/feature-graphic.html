@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Edgeprint feature graphic</title>
+<style>
+  @font-face {
+    font-family: "Inter";
+    src: url("../../../app/src/main/assets/fonts/inter.ttf") format("truetype");
+    font-weight: 100 900;
+  }
+  html, body { margin: 0; width: 1024px; height: 500px; overflow: hidden; background: #000; }
+  body {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    padding: 0 56px;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    color: #f2f2f0;
+  }
+  .copy { flex: 1 1 0; }
+  .name { font-size: 26px; font-weight: 600; margin: 0 0 20px; letter-spacing: -0.01em; }
+  h1 { font-size: 46px; line-height: 1.08; font-weight: 600; letter-spacing: -0.025em; margin: 0 0 18px; }
+  .sub { font-size: 18px; line-height: 1.45; color: #9a9aa0; margin: 0; }
+  .mark { color: #f0a040; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; margin: 0 0 14px; }
+
+  .photo { width: 452px; flex: none; background: #fff; }
+  .photo svg { display: block; width: 100%; height: auto; }
+  .bar { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px 14px; color: #141414; }
+  .bar b { display: block; font-size: 13px; font-weight: 700; }
+  .bar small { display: block; font-size: 11px; color: #6b6b70; margin-top: 2px; }
+  .bar .right { text-align: right; }
+  .bar .right b { font-weight: 600; letter-spacing: 0.01em; }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <p class="mark">▶ 01&nbsp;&nbsp;EXIF FRAMES</p>
+    <p class="name">Edgeprint</p>
+    <h1>Put your camera settings on your photos.</h1>
+    <p class="sub">25 styles. Full resolution. Works offline.</p>
+  </div>
+
+  <div class="photo">
+    <!-- Same dusk scene the app draws for its showcase (HomeScreen.sampleScene). -->
+    <svg viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1F2A44"/>
+          <stop offset="0.38" stop-color="#6B4A5E"/>
+          <stop offset="0.68" stop-color="#C9694A"/>
+          <stop offset="0.86" stop-color="#F0B45A"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="900" fill="url(#sky)"/>
+      <circle cx="816" cy="540" r="54" fill="#FFF0D2"/>
+      <polygon fill="#8A4A3C" points="0,630 240,504 480,576 720,468 960,594 1200,558 1200,900 0,900"/>
+      <polygon fill="#4A2A2C" points="0,738 240,648 480,702 720,630 960,720 1200,684 1200,900 0,900"/>
+      <polygon fill="#1C1416" points="0,828 240,774 480,810 720,792 960,756 1200,810 1200,900 0,900"/>
+    </svg>
+    <div class="bar">
+      <div><b>Galaxy S26 Ultra</b><small>2026.10.25 17:49</small></div>
+      <div class="right"><b>24mm&nbsp;&nbsp;f/1.7&nbsp;&nbsp;1/120s&nbsp;&nbsp;ISO50</b><small>Manila, Philippines</small></div>
+    </div>
+  </div>
+</body>
+</html>

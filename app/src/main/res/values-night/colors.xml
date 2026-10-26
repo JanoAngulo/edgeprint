@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Launcher icon, dark mode: light card on a dark tile. -->
+    <color name="icon_bg">#FF111113</color>
+    <color name="icon_card">#FFF2F2F0</color>
+    <color name="icon_ink">#FF111113</color>
+</resources>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edgeprint Privacy Policy</title>
+<meta name="description" content="How the Edgeprint Android app handles your photos and data.">
+<style>
+  :root {
+    --bg: #f6f5f2;
+    --text: #141414;
+    --text-2: #5c5c62;
+    --line: #dddbd5;
+    --accent: #a8620f;
+    --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #000000;
+      --text: #f2f2f0;
+      --text-2: #9a9aa0;
+      --line: #2e2e2e;
+      --accent: #f0a040;
+      --card: #141414;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #000000;
+    --text: #f2f2f0;
+    --text-2: #9a9aa0;
+    --line: #2e2e2e;
+    --accent: #f0a040;
+    --card: #141414;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 680px; margin: 0 auto; padding: 56px 16px 80px; }
+  h1 { font-size: 34px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .date { color: var(--text-2); font-size: 14px; margin: 0 0 32px; }
+  .summary {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 40px;
+  }
+  .summary p { margin: 0; }
+  h2 { font-size: 19px; margin: 36px 0 8px; }
+  p, li { color: var(--text); }
+  ul { padding-left: 20px; margin: 8px 0; }
+  li { margin: 4px 0; }
+  .muted { color: var(--text-2); }
+  a { color: var(--accent); }
+  code { font-size: 0.92em; }
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14px; color: var(--text-2); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Edgeprint Privacy Policy</h1>
+  <p class="date">Effective 26 October 2026</p>
+
+  <div class="summary">
+    <p><strong>Short version:</strong> Edgeprint works entirely on your phone. It has no accounts, ads or analytics, and it doesn't request internet access, so it can't upload your photos or data anywhere. The one exception is place names, explained below.</p>
+  </div>
+
+  <h2>Photos you choose</h2>
+  <p>Edgeprint only opens photos you pick in the app or share to it from another app. It reads the image and its camera details (camera and lens model, focal length, aperture, shutter speed, ISO, date taken and, if present, GPS coordinates) to put them on your photo.</p>
+  <p>Your original photos are never changed. Edgeprint saves a new copy instead.</p>
+
+  <h2>Permissions</h2>
+  <ul>
+    <li><strong>Photos and media access</strong> (optional). Lets Edgeprint open the original file so Android doesn't hide its GPS coordinates. You can pick photos without granting it; location just won't fill in automatically.</li>
+    <li><strong>Media location access.</strong> Required by Android to read GPS coordinates from a photo's original file.</li>
+  </ul>
+  <p>Edgeprint doesn't use your phone's current location, camera, microphone or contacts.</p>
+
+  <h2>Place names</h2>
+  <p>To turn a photo's GPS coordinates into a place name like "Manila, Philippines", Edgeprint asks Android's built-in geocoding service. On most phones that service is run by Google, which receives the coordinates and returns the place name. Its handling of that request is covered by the provider's own privacy policy, for example <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</p>
+  <p>If you're offline or the service isn't available, no place name is filled in and you can type one yourself.</p>
+
+  <h2>What Edgeprint keeps on your phone</h2>
+  <ul>
+    <li>Your settings: chosen style, font, logo options and export size and quality.</li>
+    <li>Text you enter for watermarks, such as your name, a title or a quote.</li>
+    <li>Custom names you give camera models.</li>
+    <li>A logo image, if you add one.</li>
+  </ul>
+  <p>These stay in the app's private storage. They're deleted when you clear the app's data or uninstall it.</p>
+
+  <h2>Saved photos</h2>
+  <p>Edgeprint saves new JPEG files to <code>Pictures/Edgeprint</code> on your phone. They keep the original photo's camera details. They also keep GPS coordinates unless you turn off <strong>Keep GPS in saved files</strong> in Settings. Anyone you share a saved photo with can read those details, so turn that setting off before posting if you don't want to share where you were.</p>
+
+  <h2>Device backups</h2>
+  <p>If Android backup is turned on, your phone may include Edgeprint's settings and logo in its backup to your Google account, as it does for other apps. You control this in your phone's backup settings. Edgeprint itself has no server and never sees those backups.</p>
+
+  <h2>Children</h2>
+  <p>Edgeprint isn't directed at children and doesn't collect personal information from anyone.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes, the new version will be posted on this page with a new effective date.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy: <a href="mailto:angulo.johnrussel.l.7814@gmail.com">angulo.johnrussel.l.7814@gmail.com</a></p>
+
+  <footer>Edgeprint is made by John Russel L. Angulo.</footer>
+</main>
+</body>
+</html>
