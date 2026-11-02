@@ -54,9 +54,9 @@ class Prefs(context: Context) {
             putString("quote", v.quote)
         }
 
-    /** Longest side of exported images, in pixels. */
+    /** Longest side of exported images, in pixels, or [EXPORT_ORIGINAL]. */
     var exportMax: Int
-        get() = sp.getInt("exportMax", EXPORT_FULL)
+        get() = sp.getInt("exportMax", EXPORT_ORIGINAL).let { if (it == LEGACY_FULL) EXPORT_ORIGINAL else it }
         set(v) = sp.edit { putInt("exportMax", v) }
 
     var quality: Int
@@ -78,8 +78,11 @@ class Prefs(context: Context) {
         name?.let { n -> enumValues<T>().firstOrNull { it.name == n } } ?: fallback
 
     companion object {
-        /** Full resolution up to ~50 MP; 200 MP shots are scaled to this. */
-        const val EXPORT_FULL = 8192
+        /** No cap: the photo keeps its own resolution. */
+        const val EXPORT_ORIGINAL = Int.MAX_VALUE
+
+        /** The old "Full" setting, which capped 200 MP shots at this. */
+        private const val LEGACY_FULL = 8192
     }
 }
 

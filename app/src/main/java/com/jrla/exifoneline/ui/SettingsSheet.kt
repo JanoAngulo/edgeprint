@@ -52,12 +52,16 @@ fun SettingsSheet(vm: EditorViewModel, onDismiss: () -> Unit) {
 
             SectionLabel("Size")
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                listOf(Prefs.EXPORT_FULL to "Full", 4096 to "4096 px", 2560 to "2560 px").forEach { (px, label) ->
+                listOf(Prefs.EXPORT_ORIGINAL to "Original", 4096 to "4096 px", 2560 to "2560 px", 2048 to "2048 px").forEach { (px, label) ->
                     Pill(label, vm.exportMax == px, { vm.changeExportMax(px) })
                 }
             }
             Text(
-                "Full keeps the original resolution (200 MP shots are scaled to 50 MP).",
+                if (vm.exportMax == Prefs.EXPORT_ORIGINAL) {
+                    "Keeps every pixel of the photo, with its HDR and wide colour."
+                } else {
+                    "Long side of the photo, for quicker sharing. Smaller photos aren't enlarged."
+                },
                 fontSize = 12.sp,
                 color = Palette.Text2,
                 modifier = Modifier.padding(top = 8.dp),
