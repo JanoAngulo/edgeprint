@@ -13,11 +13,11 @@ val keystoreProps = Properties().apply {
 }
 
 android {
-    namespace = "com.jrla.exifoneline"
+    namespace = "com.jrla.edgeprint"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.jrla.exifoneline"
+        applicationId = "com.jrla.edgeprint"
         minSdk = 29
         targetSdk = 36
         versionCode = 2
