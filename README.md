@@ -48,7 +48,7 @@ Release builds need a signing key. Copy `keystore.properties.example` to `keysto
 ## Project layout
 
 ```
-app/src/main/java/com/jrla/exifoneline/
+app/src/main/java/com/jrla/edgeprint/
   io/       EXIF reading, export, settings storage
   model/    photo info, styles and text
   render/   template drawing, fonts and brand logos

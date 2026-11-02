@@ -7,7 +7,7 @@ Copy for the Play Console listing. It also works for other stores, a GitHub rele
 | Field | Value |
 |---|---|
 | App name (30 max) | `Edgeprint: EXIF Photo Frame` (27) |
-| Package | `com.jrla.exifoneline` |
+| Package | `com.jrla.edgeprint` |
 | Category | Photography |
 | Tags | Photo editor, Camera, Photography |
 | Price | Free, no ads, no in-app purchases |
