@@ -20,7 +20,7 @@ Edgeprint is an Android app that frames your photos with the camera, lens and ex
 - **52 camera and phone brand logos**, picked automatically from the photo, or upload your own. Logos switch between black and white to suit the background.
 - **10 bundled fonts**, 5 aspect ratios (Original, 1:1, 4:5, 9:16, 16:9), background colours and border size.
 - **Every detail is editable:** camera, focal length, aperture, shutter, ISO, date, place, your name, a title or a quote.
-- **Full-resolution export** up to 50 MP, or 4096 px / 2560 px, with adjustable JPEG quality. Camera metadata is copied to the saved file.
+- **Original-resolution export**, or 4096 / 2560 / 2048 px, with adjustable JPEG quality. Ultra HDR and Display P3 colour are kept, and camera metadata is copied to the saved file.
 - **Batch editing** of up to 50 photos, and sharing straight from Gallery.
 - **Responsive layout** for phones, tablets and landscape, including large text sizes.
 

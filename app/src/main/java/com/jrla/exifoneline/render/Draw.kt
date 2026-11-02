@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapShader
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.ColorSpace
 import android.graphics.LinearGradient
 import android.graphics.Matrix
 import android.graphics.Paint
@@ -90,37 +91,9 @@ fun Canvas.bottomShade(w: Float, h: Float, height: Float, alpha: Float) {
     drawRect(0f, h - height, w, h, p)
 }
 
-/** Draws the photo into a rect, optionally with rounded corners and a soft drop shadow. */
-fun Canvas.photo(
-    src: Bitmap,
-    left: Float,
-    top: Float,
-    width: Float = src.width.toFloat(),
-    height: Float = src.height.toFloat(),
-    radius: Float = 0f,
-    shadow: Float = 0f,
-    shadowColor: Int = 0x59000000,
-) {
-    val dst = RectF(left, top, left + width, top + height)
-    if (shadow > 0f) {
-        val sp = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = BLACK
-            setShadowLayer(shadow, 0f, shadow * 0.4f, shadowColor)
-        }
-        drawRoundRect(dst, radius, radius, sp)
-    }
-    val p = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
-    if (radius <= 0f) {
-        drawBitmap(src, null, dst, p)
-        return
-    }
-    p.shader = BitmapShader(src, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP).apply {
-        setLocalMatrix(Matrix().apply {
-            setRectToRect(RectF(0f, 0f, src.width.toFloat(), src.height.toFloat()), dst, Matrix.ScaleToFit.FILL)
-        })
-    }
-    drawRoundRect(dst, radius, radius, p)
-}
+/** An empty ARGB bitmap in [like]'s colour space. */
+fun blankLike(like: Bitmap, width: Int, height: Int): Bitmap =
+    Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888, true, like.colorSpace ?: ColorSpace.get(ColorSpace.Named.SRGB))
 
 /** Halves repeatedly before the final resize so big downscales stay smooth. */
 fun downscale(src: Bitmap, targetW: Int): Bitmap {
@@ -189,11 +162,53 @@ class Ctx(
         textPaint(face(weight, italic), size * u, withAlpha(WHITE, alpha), spacing = spacing)
             .apply { setShadowLayer(u * 0.45f, 0f, u * 0.1f, 0x66000000) }
 
+    /** A canvas in the photo's colour space, so wide-gamut (Display P3) colours survive. */
     fun frame(width: Float, height: Float, color: Int = bg): Pair<Bitmap, Canvas> {
-        val bmp = Bitmap.createBitmap(width.roundToInt(), height.roundToInt(), Bitmap.Config.ARGB_8888)
+        val bmp = blankLike(src, width.roundToInt(), height.roundToInt())
         val cv = Canvas(bmp)
         cv.drawColor(color)
         return bmp to cv
+    }
+
+    /** Where the photo landed in the output; the HDR gain map is placed to match. */
+    var photoRect: RectF? = null
+        private set
+    var photoRadius = 0f
+        private set
+
+    /**
+     * Draws the photo, optionally with rounded corners and a soft drop shadow. The position
+     * snaps to whole pixels: at a fractional offset every pixel gets resampled and softened.
+     */
+    fun Canvas.photo(
+        src: Bitmap,
+        left: Float,
+        top: Float,
+        radius: Float = 0f,
+        shadow: Float = 0f,
+        shadowColor: Int = 0x59000000,
+    ) {
+        val x = left.roundToInt().toFloat()
+        val y = top.roundToInt().toFloat()
+        val dst = RectF(x, y, x + src.width, y + src.height)
+        photoRect = dst
+        photoRadius = radius
+        if (shadow > 0f) {
+            val sp = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = BLACK
+                setShadowLayer(shadow, 0f, shadow * 0.4f, shadowColor)
+            }
+            drawRoundRect(dst, radius, radius, sp)
+        }
+        if (radius <= 0f) {
+            drawBitmap(src, x, y, null)
+            return
+        }
+        val p = Paint(Paint.ANTI_ALIAS_FLAG)
+        p.shader = BitmapShader(src, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP).apply {
+            setLocalMatrix(Matrix().apply { setTranslate(x, y) })
+        }
+        drawRoundRect(dst, radius, radius, p)
     }
 
     // ---- Logo: brand artwork or the user's image, else the camera brand as a wordmark.

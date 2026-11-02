@@ -166,7 +166,9 @@ class EditorViewModel(app: Application) : AndroidViewModel(app) {
     private fun load(uri: Uri): Loaded {
         val exif = ExifReader.read(context, uri) { prefs.modelOverride(it) }
         val thumb = ImageIO.decode(context, uri, THUMB_PX)
-        val item = PhotoItem(uri, ImageIO.displayName(context, uri), exif.exifUri, exif.rawModel, exif.info)
+        // Picker URIs can name the file by its media ID; the original file has the real name.
+        val name = ImageIO.displayName(context, if (exif.exifUri != uri) exif.exifUri else uri)
+        val item = PhotoItem(uri, name, exif.exifUri, exif.rawModel, exif.info)
         val gps = if (exif.lat != null && exif.lon != null) exif.lat to exif.lon else null
         return Loaded(item, thumb, gps)
     }
@@ -280,12 +282,12 @@ class EditorViewModel(app: Application) : AndroidViewModel(app) {
 
     /** Renders at full size, stepping down if the phone runs out of memory. Second value: was it reduced. */
     private fun exportOne(item: PhotoItem, style: Style, texts: Texts, logo: Bitmap?): Pair<Uri, Boolean>? {
-        val sizes = listOf(exportMax, 4096, 2560).filter { it <= exportMax }.distinct()
+        val sizes = listOf(exportMax, 8192, 4096, 2560).filter { it <= exportMax }.distinct()
         for ((attempt, maxLong) in sizes.withIndex()) {
             try {
-                val src = ImageIO.decode(context, item.uri, maxLong)
+                val src = ImageIO.decode(context, item.uri, maxLong, wideGamut = true)
                 val out = try {
-                    Renderer.render(src, item.info, texts, style, BrandLogos.resolve(style.logoId, item.info.brand, logo))
+                    Renderer.render(src, item.info, texts, style, BrandLogos.resolve(style.logoId, item.info.brand, logo), hdr = true)
                 } finally {
                     src.recycle()
                 }
